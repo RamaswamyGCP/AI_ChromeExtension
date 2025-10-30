@@ -1,0 +1,40 @@
+{
+  "name": "smart-content-assistant",
+  "version": "1.0.0",
+  "description": "AI-powered Chrome extension using Chrome's Built-in AI APIs (Gemini Nano)",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0",
+    "build": "echo \"Building extension...\" && zip -r SmartContentAssistant.zip . -x '*.git*' 'node_modules/*' '*.DS_Store' 'package*.json'",
+    "dev": "echo \"Extension ready for development. Load in chrome://extensions/\""
+  },
+  "keywords": [
+    "chrome-extension",
+    "ai",
+    "gemini-nano",
+    "summarizer",
+    "translator",
+    "rewriter",
+    "proofreader",
+    "content-assistant",
+    "privacy",
+    "on-device-ai"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/smart-content-assistant"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/smart-content-assistant/issues"
+  },
+  "homepage": "https://github.com/yourusername/smart-content-assistant#readme",
+  "devDependencies": {},
+  "dependencies": {},
+  "engines": {
+    "chrome": ">=127.0.0"
+  }
+}
+
+

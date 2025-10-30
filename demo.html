@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Content Assistant - Demo Page</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+
+    .demo-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 15px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero p {
+      font-size: 20px;
+      opacity: 0.95;
+    }
+
+    .demo-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .demo-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .card-icon {
+      font-size: 40px;
+      margin-right: 15px;
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .card-content {
+      color: #4a5568;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    .sample-text {
+      background: #f7fafc;
+      border: 2px dashed #cbd5e0;
+      border-radius: 8px;
+      padding: 20px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: #2d3748;
+      cursor: text;
+      user-select: text;
+    }
+
+    .instruction {
+      background: #e6fffa;
+      border-left: 4px solid #48bb78;
+      padding: 15px;
+      margin-top: 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #2d3748;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .feature-box {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 50px;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: #718096;
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      margin-top: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .highlight {
+      background: linear-gradient(120deg, #ffeaa7 0%, #fdcb6e 100%);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="hero">
+      <h1>✨ Smart Content Assistant</h1>
+      <p>AI-Powered Tools Right in Your Browser • 100% Private • On-Device Processing</p>
+    </div>
+
+    <div class="demo-card">
+      <div class="card-header">
+        <span class="card-icon">📄</span>
+        <h2 class="card-title">Try Summarization</h2>
+      </div>
+      <div class="card-content">
+        <p><strong>Select the text below and use the AI toolbar or extension popup to summarize it:</strong></p>
+      </div>
+      <div class="sample-text">
+        Artificial Intelligence (AI) has become one of the most transformative technologies of our time. From virtual assistants like Siri and Alexa to recommendation systems on Netflix and Amazon, AI is increasingly embedded in our daily lives. Machine learning, a subset of AI, allows computers to learn from data without being explicitly programmed. Deep learning, which uses neural networks inspired by the human brain, has enabled breakthroughs in image recognition, natural language processing, and autonomous vehicles. As AI continues to advance, it raises important questions about ethics, privacy, and the future of work. Understanding AI is crucial for everyone in the modern world, not just technologists and researchers.
+      </div>
+      <div class="instruction">
+        💡 <strong>Try it:</strong> Select the text above → Click the extension icon → Choose "Summarize" → See the magic!
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="card-header">
+        <span class="card-icon">🖊️</span>
+        <h2 class="card-title">Try Rewriting</h2>
+      </div>
+      <div class="card-content">
+        <p><strong>Select this casual text and rewrite it in a formal tone:</strong></p>
+      </div>
+      <div class="sample-text">
+        Hey! Thanks for checking out our new product. It's super cool and we think you'll really like it. We've been working on it for ages and put in tons of effort. Let us know what you think when you get a chance!
+      </div>
+      <div class="instruction">
+        💡 <strong>Try it:</strong> Select text → Extension → "Rewrite" → Choose "Formal" tone
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="card-header">
+        <span class="card-icon">🔤</span>
+        <h2 class="card-title">Try Proofreading</h2>
+      </div>
+      <div class="card-content">
+        <p><strong>This text has errors. Select it and use proofread to fix them:</strong></p>
+      </div>
+      <div class="sample-text">
+        Their are many benifits to using on-device AI. First, its more private becuase you're data never leaves your device. Second, its faster since theres no network latency. Third, it works offline which is grate for travling. Finally, thier are no API costs or usage limits!
+      </div>
+      <div class="instruction">
+        💡 <strong>Try it:</strong> Select text → Extension → "Proofread" → See corrections
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="card-header">
+        <span class="card-icon">🌐</span>
+        <h2 class="card-title">Try Translation</h2>
+      </div>
+      <div class="card-content">
+        <p><strong>Translate this English text to Spanish (or any other supported language):</strong></p>
+      </div>
+      <div class="sample-text">
+        Welcome to the future of AI-powered browsing! This extension brings cutting-edge artificial intelligence directly to your browser, ensuring your privacy while providing powerful content assistance.
+      </div>
+      <div class="instruction">
+        💡 <strong>Try it:</strong> Select text → Extension → "Translate" → Choose language
+      </div>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-box">
+        <div class="feature-icon">⚡</div>
+        <div class="feature-title">Lightning Fast</div>
+        <div class="feature-desc">On-device processing means instant results with zero network delay</div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🔒</div>
+        <div class="feature-title">100% Private</div>
+        <div class="feature-desc">Your data never leaves your device. No servers, no tracking, no compromises</div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">💰</div>
+        <div class="feature-title">Zero Cost</div>
+        <div class="feature-desc">No API keys, no subscriptions, no usage limits. Completely free forever</div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">Works Offline</div>
+        <div class="feature-desc">No internet connection required once the model is downloaded</div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🎯</div>
+        <div class="feature-title">Easy to Use</div>
+        <div class="feature-desc">Simple, beautiful interface. Just select text and click. That's it!</div>
+      </div>
+
+      <div class="feature-box">
+        <div class="feature-icon">🚀</div>
+        <div class="feature-title">Powerful AI</div>
+        <div class="feature-desc">Powered by Google's Gemini Nano, state-of-the-art language model</div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <h2 style="margin-bottom: 20px; color: #2d3748;">Ready to Get Started?</h2>
+      <p style="color: #718096; margin-bottom: 30px; font-size: 16px;">
+        Follow the setup instructions to install the extension and unlock AI-powered content assistance.
+      </p>
+      <a href="SETUP_INSTRUCTIONS.html" class="cta-button">📖 View Setup Guide</a>
+      <a href="QUICK_START.md" class="cta-button">🚀 Quick Start</a>
+      <a href="README.md" class="cta-button">📚 Documentation</a>
+    </div>
+  </div>
+</body>
+</html>
+
+

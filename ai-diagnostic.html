@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chrome AI Diagnostic Report</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 14px;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .section-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .label {
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .value {
+      color: #333;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+    
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    
+    .status.warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+    
+    .code-block {
+      background: #2d2d2d;
+      color: #f8f8f2;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      overflow-x: auto;
+      margin-top: 10px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    
+    .button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+      margin-top: 10px;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+    }
+    
+    .button:active {
+      transform: translateY(0);
+    }
+    
+    .instructions {
+      background: #e7f3ff;
+      border-left: 4px solid #2196F3;
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+    
+    .instructions h3 {
+      color: #1976D2;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+      color: #333;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+    
+    .report-content {
+      display: none;
+    }
+    
+    .report-content.show {
+      display: block;
+    }
+    
+    #copyReport {
+      margin-top: 20px;
+    }
+    
+    .alert {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+    
+    .alert.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔍 Chrome AI Diagnostic Report</h1>
+    <p class="subtitle">This page will help you gather all the information needed for your support request</p>
+    
+    <div class="instructions">
+      <h3>📋 How to Use This Page:</h3>
+      <ol>
+        <li>Click the <strong>"Run Diagnostic"</strong> button below</li>
+        <li>Review the generated report</li>
+        <li>Click <strong>"Copy Report to Clipboard"</strong></li>
+        <li>Take screenshots as mentioned in the report</li>
+        <li>Send everything to the Chrome team</li>
+      </ol>
+    </div>
+    
+    <button class="button" onclick="runDiagnostic()">🚀 Run Diagnostic</button>
+    
+    <div id="reportContent" class="report-content">
+      <div id="copySuccess" class="alert success" style="display: none;">
+        ✅ Report copied to clipboard! Now take the screenshots mentioned below.
+      </div>
+      
+      <div class="section">
+        <div class="section-title">📊 System Information</div>
+        <div id="systemInfo"></div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">🧪 Chrome AI API Status</div>
+        <div id="apiStatus"></div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">📸 Screenshots Needed</div>
+        <div id="screenshotInstructions"></div>
+      </div>
+      
+      <div class="section">
+        <div class="section-title">📧 Email Report (Copy This)</div>
+        <div class="code-block" id="emailReport"></div>
+      </div>
+      
+      <button class="button" id="copyReport" onclick="copyReport()">📋 Copy Report to Clipboard</button>
+    </div>
+  </div>
+  
+  <script>
+    let fullReport = '';
+    
+    async function runDiagnostic() {
+      // Show report section
+      document.getElementById('reportContent').classList.add('show');
+      
+      // Gather system info
+      const userAgent = navigator.userAgent;
+      const chromeVersion = userAgent.match(/Chrome\/(\d+\.\d+\.\d+\.\d+)/)?.[1] || 'Unknown';
+      const platform = navigator.platform;
+      const language = navigator.language;
+      const memory = navigator.deviceMemory ? `${navigator.deviceMemory} GB` : 'Unknown';
+      
+      // Check AI APIs
+      const windowAiExists = 'ai' in window;
+      const languageModelExists = windowAiExists && 'languageModel' in window.ai;
+      const summarizerExists = windowAiExists && 'summarizer' in window.ai;
+      const writerExists = windowAiExists && 'writer' in window.ai;
+      const rewriterExists = windowAiExists && 'rewriter' in window.ai;
+      
+      // Display System Info
+      const systemInfoHTML = `
+        <div class="info-row">
+          <span class="label">Chrome Version:</span>
+          <span class="value">${chromeVersion}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Platform:</span>
+          <span class="value">${platform}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">User Agent:</span>
+          <span class="value">${userAgent}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Language:</span>
+          <span class="value">${language}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">Device Memory:</span>
+          <span class="value">${memory}</span>
+        </div>
+      `;
+      document.getElementById('systemInfo').innerHTML = systemInfoHTML;
+      
+      // Display API Status
+      const apiStatusHTML = `
+        <div class="info-row">
+          <span class="label">window.ai exists:</span>
+          <span class="status ${windowAiExists ? 'success' : 'error'}">${windowAiExists ? '✅ YES' : '❌ NO'}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">languageModel API:</span>
+          <span class="status ${languageModelExists ? 'success' : 'error'}">${languageModelExists ? '✅ Available' : '❌ Not Available'}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">summarizer API:</span>
+          <span class="status ${summarizerExists ? 'success' : 'error'}">${summarizerExists ? '✅ Available' : '❌ Not Available'}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">writer API:</span>
+          <span class="status ${writerExists ? 'success' : 'error'}">${writerExists ? '✅ Available' : '❌ Not Available'}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">rewriter API:</span>
+          <span class="status ${rewriterExists ? 'success' : 'error'}">${rewriterExists ? '✅ Available' : '❌ Not Available'}</span>
+        </div>
+      `;
+      document.getElementById('apiStatus').innerHTML = apiStatusHTML;
+      
+      // Screenshot Instructions
+      const screenshotHTML = `
+        <ol style="margin-left: 20px; color: #333; line-height: 1.8;">
+          <li><strong>Chrome Version:</strong> Go to <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">chrome://version/</code> and take a screenshot</li>
+          <li><strong>Chrome Components:</strong> Go to <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">chrome://components/</code> and take a screenshot</li>
+          <li><strong>Chrome Flags:</strong> Go to <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">chrome://flags/#optimization-guide-on-device-model</code> and take a screenshot</li>
+          <li><strong>Prompt API Flag:</strong> Go to <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">chrome://flags/#prompt-api-for-gemini-nano</code> and take a screenshot</li>
+          <li><strong>Console Check:</strong> Open DevTools (F12), type <code style="background: #f0f0f0; padding: 2px 6px; border-radius: 3px;">window.ai</code> in Console and take a screenshot</li>
+        </ol>
+      `;
+      document.getElementById('screenshotInstructions').innerHTML = screenshotHTML;
+      
+      // Generate Email Report
+      const emailReport = `
+Subject: Chrome Built-in AI Not Available - Region Restriction Query (India)
+
+Hello Chrome Team,
+
+I'm developing a Chrome extension using the Built-in AI APIs (Gemini Nano) and encountering availability issues. I'd like to confirm if this is a regional restriction.
+
+=== SYSTEM INFORMATION ===
+Browser: Google Chrome Canary
+Version: ${chromeVersion}
+Platform: ${platform}
+Location: India
+User Agent: ${userAgent}
+Device Memory: ${memory}
+
+=== AI API STATUS ===
+window.ai exists: ${windowAiExists ? 'YES' : 'NO'}
+languageModel API: ${languageModelExists ? 'Available' : 'Not Available'}
+summarizer API: ${summarizerExists ? 'Available' : 'Not Available'}
+writer API: ${writerExists ? 'Available' : 'Not Available'}
+rewriter API: ${rewriterExists ? 'Available' : 'Not Available'}
+
+=== CONFIGURATION ===
+✅ chrome://flags/#optimization-guide-on-device-model → Enabled BypassPerfRequirement
+✅ chrome://flags/#prompt-api-for-gemini-nano → Enabled
+✅ Chrome restarted multiple times
+✅ Launched with feature flags via command line
+
+=== ISSUE ===
+In chrome://components/, I only see:
+- "Optimization Hints (Version: 564)" ✅
+- "Optimization Guide On Device Model" ❌ NOT PRESENT
+
+The "Optimization Guide On Device Model" component never appears, preventing Gemini Nano from downloading.
+
+=== WHAT I'VE TRIED ===
+✅ Enabled all required flags
+✅ Restarted Chrome completely (Cmd+Q)
+✅ Launched with --enable-features flags
+✅ Clicked "Check for update" on all components
+✅ Waited for background download
+✅ Verified Chrome version is 144+ (Canary)
+❌ Component still doesn't appear
+
+=== QUESTIONS ===
+1. Is Chrome Built-in AI currently restricted by region/country?
+2. Is India in the supported regions list?
+3. Is there a waitlist or gradual rollout based on geography?
+4. If regional restrictions exist, what is the timeline for India?
+
+=== REQUEST ===
+Could you please confirm:
+- Which countries/regions currently have access?
+- If India is supported, what additional steps should I take?
+- If not supported yet, when can we expect availability?
+
+I have screenshots of chrome://version/, chrome://components/, and chrome://flags/ ready to share if needed.
+
+Thank you for your assistance!
+
+Best regards,
+[Your Name]
+
+Extension: Smart Content Assistant
+Purpose: AI-powered content tools for web browsing
+      `.trim();
+      
+      document.getElementById('emailReport').textContent = emailReport;
+      fullReport = emailReport;
+      
+      // Scroll to report
+      document.getElementById('reportContent').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function copyReport() {
+      navigator.clipboard.writeText(fullReport).then(() => {
+        const successMsg = document.getElementById('copySuccess');
+        successMsg.style.display = 'block';
+        setTimeout(() => {
+          successMsg.style.display = 'none';
+        }, 5000);
+      }).catch(err => {
+        alert('Failed to copy. Please select and copy the text manually.');
+      });
+    }
+  </script>
+</body>
+</html>
+

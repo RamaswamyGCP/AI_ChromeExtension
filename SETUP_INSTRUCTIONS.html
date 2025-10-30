@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Content Assistant - Setup Instructions</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px;
+    }
+
+    .step {
+      background: #f8f9fa;
+      border-left: 4px solid #667eea;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateX(5px);
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 20px;
+    }
+
+    .step-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .step-content {
+      margin-left: 55px;
+      color: #4a5568;
+      line-height: 1.7;
+    }
+
+    code {
+      background: #2d3748;
+      color: #48bb78;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 14px;
+    }
+
+    .code-block {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      overflow-x: auto;
+      font-family: 'Monaco', 'Courier New', monospace;
+    }
+
+    .warning {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    .success {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 10px 5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .button-group {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #e2e8f0;
+    }
+
+    footer {
+      background: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      color: #718096;
+    }
+
+    .checklist {
+      list-style: none;
+      margin: 15px 0;
+    }
+
+    .checklist li {
+      padding: 10px;
+      margin: 8px 0;
+      background: white;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    .checklist li::before {
+      content: "✓";
+      color: #48bb78;
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>✨ Smart Content Assistant</h1>
+      <p class="subtitle">Complete Setup Instructions</p>
+    </header>
+
+    <div class="content">
+      <div class="warning">
+        <strong>⚠️ Important:</strong> This extension requires Chrome 127+ with experimental AI features enabled.
+        It uses on-device AI (Gemini Nano) for complete privacy.
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <span class="step-number">1</span>
+          Enable Chrome AI Flags
+        </div>
+        <div class="step-content">
+          <p>Open these Chrome flags and enable them:</p>
+          <div class="code-block">chrome://flags/#optimization-guide-on-device-model<br>→ Set to "Enabled BypassPerfRequirement"</div>
+          <div class="code-block">chrome://flags/#prompt-api-for-gemini-nano<br>→ Set to "Enabled"</div>
+          <p><strong>Then restart Chrome</strong></p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <span class="step-number">2</span>
+          Download Gemini Nano Model
+        </div>
+        <div class="step-content">
+          <p>Open DevTools (F12) on any page and run:</p>
+          <div class="code-block">await ai.languageModel.create()</div>
+          <p>Wait for the ~1.5GB model to download. This is a one-time setup.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <span class="step-number">3</span>
+          Generate Extension Icons
+        </div>
+        <div class="step-content">
+          <p>The extension needs 4 icon files. Use the icon generator:</p>
+          <ul class="checklist">
+            <li>Open <code>generate-icons.html</code> in Chrome</li>
+            <li>Click "Download All Icons" button</li>
+            <li>Move downloaded files to <code>/icons</code> folder</li>
+            <li>Verify: icon16.png, icon32.png, icon48.png, icon128.png</li>
+          </ul>
+          <button onclick="window.open('generate-icons.html', '_blank')">
+            Open Icon Generator
+          </button>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <span class="step-number">4</span>
+          Load Extension in Chrome
+        </div>
+        <div class="step-content">
+          <p>Install the extension:</p>
+          <ul class="checklist">
+            <li>Go to <code>chrome://extensions/</code></li>
+            <li>Enable "Developer mode" (top-right toggle)</li>
+            <li>Click "Load unpacked"</li>
+            <li>Select this extension folder</li>
+            <li>Pin the extension to your toolbar</li>
+          </ul>
+          <button onclick="window.open('chrome://extensions/', '_blank')">
+            Open Extensions Page
+          </button>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-title">
+          <span class="step-number">5</span>
+          Test the Extension
+        </div>
+        <div class="step-content">
+          <p>Verify everything works:</p>
+          <ul class="checklist">
+            <li>Click the extension icon in toolbar</li>
+            <li>Try the "AI Prompt" tab</li>
+            <li>Enter: "Explain AI in simple terms"</li>
+            <li>Click "Generate" and verify response</li>
+            <li>Select text on any webpage to see toolbar</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="success">
+        <strong>🎉 Success!</strong> You can now use all AI-powered features:
+        <ul class="checklist">
+          <li>📄 Summarize complex content</li>
+          <li>🖊️ Rewrite text in different tones</li>
+          <li>🔤 Proofread for grammar errors</li>
+          <li>🌐 Translate to 10+ languages</li>
+          <li>✏️ Generate original content</li>
+          <li>⚡ Ask AI anything</li>
+        </ul>
+      </div>
+
+      <div class="button-group">
+        <button onclick="window.open('README.md', '_blank')">
+          📖 Read Full Documentation
+        </button>
+        <button onclick="window.open('QUICK_START.md', '_blank')">
+          🚀 Quick Start Guide
+        </button>
+        <button onclick="checkSetup()">
+          ✓ Check My Setup
+        </button>
+      </div>
+    </div>
+
+    <footer>
+      <p>🔒 All AI processing happens locally on your device</p>
+      <p>Made with ❤️ using Chrome Built-in AI • Privacy First • No API Keys Required</p>
+    </footer>
+  </div>
+
+  <script>
+    function checkSetup() {
+      let messages = [];
+      
+      // Check Chrome version
+      const chromeVersion = navigator.userAgent.match(/Chrome\/(\d+)/)?.[1];
+      if (chromeVersion && parseInt(chromeVersion) >= 127) {
+        messages.push('✓ Chrome version: ' + chromeVersion + ' (Good!)');
+      } else {
+        messages.push('✗ Chrome version: ' + (chromeVersion || 'Unknown') + ' (Need 127+)');
+      }
+      
+      // Check AI availability
+      if ('ai' in window) {
+        messages.push('✓ AI APIs detected');
+      } else {
+        messages.push('✗ AI APIs not available. Enable flags and restart Chrome.');
+      }
+      
+      alert('Setup Check:\n\n' + messages.join('\n'));
+    }
+  </script>
+</body>
+</html>
+
+
