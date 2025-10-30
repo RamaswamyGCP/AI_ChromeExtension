@@ -25,13 +25,41 @@ function hideLoading() {
   document.getElementById('loading').style.display = 'none';
 }
 
-function showError(message) {
+function showError(message, isHTML = false, persistent = false) {
   const errorDiv = document.getElementById('error');
-  errorDiv.textContent = message;
+  if (isHTML) {
+    errorDiv.innerHTML = message;
+  } else {
+    errorDiv.textContent = message;
+  }
   errorDiv.style.display = 'block';
-  setTimeout(() => {
-    errorDiv.style.display = 'none';
-  }, 5000);
+  
+  if (!persistent) {
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 8000);
+  }
+}
+
+function getDetailedAIError() {
+  return `
+    <strong>⚠️ Chrome AI Not Available</strong><br><br>
+    The Chrome Built-in AI APIs are not accessible. This could be because:<br><br>
+    <strong>1. Chrome Version:</strong> Need Chrome 127+ (Canary/Dev recommended)<br>
+    <strong>2. AI Flags Not Enabled:</strong><br>
+    &nbsp;&nbsp;• Go to <code>chrome://flags/#optimization-guide-on-device-model</code><br>
+    &nbsp;&nbsp;• Set to "Enabled BypassPerfRequirement"<br>
+    &nbsp;&nbsp;• Go to <code>chrome://flags/#prompt-api-for-gemini-nano</code><br>
+    &nbsp;&nbsp;• Set to "Enabled"<br>
+    &nbsp;&nbsp;• Restart Chrome<br><br>
+    <strong>3. Gemini Nano Not Downloaded:</strong><br>
+    &nbsp;&nbsp;• Open DevTools (F12), go to Console<br>
+    &nbsp;&nbsp;• Run: <code>await ai.languageModel.create()</code><br>
+    &nbsp;&nbsp;• Wait for download (~1.5GB)<br><br>
+    <strong>4. Regional Restrictions:</strong><br>
+    &nbsp;&nbsp;• Feature may not be available in all regions yet<br><br>
+    <a href="https://developer.chrome.com/docs/ai/built-in" target="_blank" style="color: #667eea; font-weight: 600;">📚 Learn More</a>
+  `;
 }
 
 function hideError() {
@@ -93,12 +121,12 @@ document.getElementById('summarize-btn').addEventListener('click', async () => {
       func: async (text, summaryLength) => {
         try {
           if (!('ai' in window) || !('summarizer' in window.ai)) {
-            return { error: 'Summarizer API is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canSummarize = await window.ai.summarizer.capabilities();
           if (canSummarize.available === 'no') {
-            return { error: 'Summarizer API is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const summarizer = await window.ai.summarizer.create({
@@ -119,7 +147,11 @@ document.getElementById('summarize-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('summarize', results[0].result.result);
         }
@@ -175,12 +207,12 @@ document.getElementById('rewrite-btn').addEventListener('click', async () => {
       func: async (text, rewriteTone) => {
         try {
           if (!('ai' in window) || !('rewriter' in window.ai)) {
-            return { error: 'Rewriter API is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canRewrite = await window.ai.rewriter.capabilities();
           if (canRewrite.available === 'no') {
-            return { error: 'Rewriter API is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const rewriter = await window.ai.rewriter.create({
@@ -201,7 +233,11 @@ document.getElementById('rewrite-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('rewrite', results[0].result.result);
         }
@@ -239,12 +275,12 @@ document.getElementById('proofread-btn').addEventListener('click', async () => {
           // or Language Model API for grammar correction
           
           if (!('ai' in window) || !('languageModel' in window.ai)) {
-            return { error: 'AI Language Model is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canUseAI = await window.ai.languageModel.capabilities();
           if (canUseAI.available === 'no') {
-            return { error: 'AI Language Model is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const session = await window.ai.languageModel.create({
@@ -264,7 +300,11 @@ document.getElementById('proofread-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('proofread', results[0].result.result);
         }
@@ -299,12 +339,12 @@ document.getElementById('translate-btn').addEventListener('click', async () => {
       func: async (text, language) => {
         try {
           if (!('ai' in window) || !('languageModel' in window.ai)) {
-            return { error: 'AI Translator is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canUseAI = await window.ai.languageModel.capabilities();
           if (canUseAI.available === 'no') {
-            return { error: 'AI Language Model is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const languageNames = {
@@ -327,7 +367,11 @@ document.getElementById('translate-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('translate', results[0].result.result);
         }
@@ -362,12 +406,12 @@ document.getElementById('writer-btn').addEventListener('click', async () => {
       func: async (userPrompt, contentLength) => {
         try {
           if (!('ai' in window) || !('writer' in window.ai)) {
-            return { error: 'Writer API is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canWrite = await window.ai.writer.capabilities();
           if (canWrite.available === 'no') {
-            return { error: 'Writer API is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const writer = await window.ai.writer.create({
@@ -388,7 +432,11 @@ document.getElementById('writer-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('writer', results[0].result.result);
         }
@@ -422,12 +470,12 @@ document.getElementById('prompt-btn').addEventListener('click', async () => {
       func: async (userPrompt) => {
         try {
           if (!('ai' in window) || !('languageModel' in window.ai)) {
-            return { error: 'AI Language Model is not available. Please ensure you\'re using Chrome 127+ with AI features enabled.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const canUseAI = await window.ai.languageModel.capabilities();
           if (canUseAI.available === 'no') {
-            return { error: 'AI Language Model is not available on this device.' };
+            return { error: 'AI_NOT_AVAILABLE' };
           }
           
           const session = await window.ai.languageModel.create();
@@ -444,7 +492,11 @@ document.getElementById('prompt-btn').addEventListener('click', async () => {
       hideLoading();
       if (results && results[0] && results[0].result) {
         if (results[0].result.error) {
-          showError(results[0].result.error);
+          if (results[0].result.error === 'AI_NOT_AVAILABLE') {
+            showError(getDetailedAIError(), true, true);
+          } else {
+            showError(results[0].result.error);
+          }
         } else {
           showOutput('prompt', results[0].result.result);
         }
